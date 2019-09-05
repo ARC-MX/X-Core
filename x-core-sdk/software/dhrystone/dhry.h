@@ -344,12 +344,10 @@
  *
  ***************************************************************************
  */
- //Bob: here we add define TIME and NOENUM
-#define TIME
-#define NOENUM
 
 /* Compiler and system dependent definitions: */
-
+#define TIME
+#define NOENUM
 #ifndef TIME
 #define TIMES
 #endif
@@ -424,3 +422,7 @@ typedef struct record
       } Rec_Type, *Rec_Pointer;
 
 
+long csr_cycle(void);
+long csr_instret(void);
+long time(void);
+void __wrap_scanf(const char* fmt, int* n);
