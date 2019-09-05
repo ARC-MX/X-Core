@@ -50,14 +50,14 @@ module ram
       .clk       ( clk           ),
 
       .en_a_i    ( instr_req_i   ),
-      .addr_a_i  ( instr_addr_i  ),
+      .addr_a_i  ( {11'd0,instr_addr_i[20:0]}  ),
       .wdata_a_i ( '0            ),	// Not writing so ignored
       .rdata_a_o ( instr_rdata_o ),
       .we_a_i    ( '0            ),
       .be_a_i    ( 4'b1111       ),	// Always want 32-bits
 
       .en_b_i    ( data_req_i    ),
-      .addr_b_i  ( data_addr_i   ),
+      .addr_b_i  (  {11'd0,data_addr_i[20:0]}   ),
       .wdata_b_i ( data_wdata_i  ),
       .rdata_b_o ( data_rdata_o  ),
       .we_b_i    ( data_we_i     ),
@@ -68,14 +68,14 @@ module ram
 		.clka(clk),    // input wire clka
 		.ena(instr_req_i),      // input wire ena
 		.wea('0),      // input wire [0 : 0] wea
-		.addra(instr_addr_i[16:2]),// -15'h4020),  // input wire [12 : 0] addra
+		.addra(instr_addr_i[17:2]),// -15'h4020),  // input wire [12 : 0] addra
 		.dina('0),    // input wire [31 : 0] dina
 		.douta(instr_rdata_o),  // output wire [31 : 0] douta
 		
 		.clkb(clk),    // input wire clkb
 		.enb(data_req_i),      // input wire enb
-		.web(data_we_i),      // input wire [0 : 0] web
-		.addrb(data_addr_i[16:2]),//-15'h4020),  // input wire [12 : 0] addrb
+		.web(data_be_i & {4{data_we_i}}),      // input wire [0 : 0] web
+		.addrb(data_addr_i[17:2]),//-15'h4020),  // input wire [12 : 0] addrb
 		.dinb(data_wdata_i),    // input wire [31 : 0] dinb
 		.doutb(data_rdata_o)  // output wire [31 : 0] doutb
 );  
