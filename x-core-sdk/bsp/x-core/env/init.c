@@ -152,7 +152,7 @@ void _init()
   #ifndef NO_INIT
   uart_init(128000);
 
-  printf("Core freq at 50MHz\n");
+  printf("Core freq at %d Hz\r\n", get_cpu_freq());
 
   write_csr(mtvec, &trap_entry);
   if (read_csr(misa) & (1 << ('F' - 'A'))) { // if F extension is present
