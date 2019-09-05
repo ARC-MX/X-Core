@@ -10,14 +10,16 @@ If you received this EEMBC CoreMark Software without the accompanying CoreMark L
 you must discontinue use and download the official release from www.coremark.org.  
 
 Also, if you are publicly displaying scores generated from the EEMBC CoreMark software, 
-make sure that you are in compliance with Run and Reporting rules specified in the accompanying readme.txt file.
+make sure that you are in compliance with Run and Reporting rules specified in the accompanying 
+readme.txt file.
 
 EEMBC 
 4354 Town Center Blvd. Suite 114-200
 El Dorado Hills, CA, 95762 
 */ 
 /* File: core_main.c
-	This file contains the framework to acquire a block of memory, seed initial parameters, tun t he benchmark and report the results.
+	This file contains the framework to acquire a block of memory, seed initial parameters, 
+	tun the benchmark and report the results.
 */
 #include "coremark.h"
 
@@ -32,9 +34,9 @@ El Dorado Hills, CA, 95762
 	Returns:
 	NULL.
 */
-static ee_u16 list_known_crc[]   =      {(ee_u16)0xd4b0,(ee_u16)0x3340,(ee_u16)0x6a79,(ee_u16)0xe714,(ee_u16)0xe3c1};
-static ee_u16 matrix_known_crc[] =      {(ee_u16)0xbe52,(ee_u16)0x1199,(ee_u16)0x5608,(ee_u16)0x1fd7,(ee_u16)0x0747};
-static ee_u16 state_known_crc[]  =      {(ee_u16)0x5e47,(ee_u16)0x39bf,(ee_u16)0xe5a4,(ee_u16)0x8e3a,(ee_u16)0x8d84};
+static ee_u16 list_known_crc[]   =  {(ee_u16)0xd4b0,(ee_u16)0x3340,(ee_u16)0x6a79,(ee_u16)0xe714,(ee_u16)0xe3c1};
+static ee_u16 matrix_known_crc[] =  {(ee_u16)0xbe52,(ee_u16)0x1199,(ee_u16)0x5608,(ee_u16)0x1fd7,(ee_u16)0x0747};
+static ee_u16 state_known_crc[]  =  {(ee_u16)0x5e47,(ee_u16)0x39bf,(ee_u16)0xe5a4,(ee_u16)0x8e3a,(ee_u16)0x8d84};
 void *iterate(void *pres) {
 	ee_u32 i;
 	ee_u16 crc;
@@ -104,7 +106,7 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	portable_init(&(results[0].port), &argc, argv);
 	/* First some checks to make sure benchmark will run ok */
 	if (sizeof(struct list_head_s)>128) {
-		ee_printf("list_head structure too big for comparable data!\n");
+		ee_printf("list_head structure too big for comparable data!\r\n");
 		return MAIN_RETURN_VAL;
 	}
 	results[0].seed1=get_seed(1);
@@ -242,23 +244,23 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	switch (seedcrc) { /* test known output for common seeds */
 		case 0x8a02: /* seed1=0, seed2=0, seed3=0x66, size 2000 per algorithm */
 			known_id=0;
-			ee_printf("6k performance run parameters for coremark.\n");
+			ee_printf("6k performance run parameters for coremark.\r\n");
 			break;
 		case 0x7b05: /*  seed1=0x3415, seed2=0x3415, seed3=0x66, size 2000 per algorithm */
 			known_id=1;
-			ee_printf("6k validation run parameters for coremark.\n");
+			ee_printf("6k validation run parameters for coremark.\r\n");
 			break;
 		case 0x4eaf: /* seed1=0x8, seed2=0x8, seed3=0x8, size 400 per algorithm */
 			known_id=2;
-			ee_printf("Profile generation run parameters for coremark.\n");
+			ee_printf("Profile generation run parameters for coremark.\r\n");
 			break;
 		case 0xe9f5: /* seed1=0, seed2=0, seed3=0x66, size 666 per algorithm */
 			known_id=3;
-			ee_printf("2K performance run parameters for coremark.\n");
+			ee_printf("\r\n2K performance run parameters for coremark.\r\n");
 			break;
 		case 0x18f2: /*  seed1=0x3415, seed2=0x3415, seed3=0x66, size 666 per algorithm */
 			known_id=4;
-			ee_printf("2K validation run parameters for coremark.\n");
+			ee_printf("2K validation run parameters for coremark.\r\n");
 			break;
 		default:
 			total_errors=-1;
@@ -269,17 +271,17 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 			results[i].err=0;
 			if ((results[i].execs & ID_LIST) && 
 				(results[i].crclist!=list_known_crc[known_id])) {
-				ee_printf("[%u]ERROR! list crc 0x%04x - should be 0x%04x\n",i,results[i].crclist,list_known_crc[known_id]);
+				ee_printf("[%u]ERROR! list crc 0x%04x - should be 0x%04x\r\n",i,results[i].crclist,list_known_crc[known_id]);
 				results[i].err++;
 			}
 			if ((results[i].execs & ID_MATRIX) &&
 				(results[i].crcmatrix!=matrix_known_crc[known_id])) {
-				ee_printf("[%u]ERROR! matrix crc 0x%04x - should be 0x%04x\n",i,results[i].crcmatrix,matrix_known_crc[known_id]);
+				ee_printf("[%u]ERROR! matrix crc 0x%04x - should be 0x%04x\r\n",i,results[i].crcmatrix,matrix_known_crc[known_id]);
 				results[i].err++;
 			}
 			if ((results[i].execs & ID_STATE) &&
 				(results[i].crcstate!=state_known_crc[known_id])) {
-				ee_printf("[%u]ERROR! state crc 0x%04x - should be 0x%04x\n",i,results[i].crcstate,state_known_crc[known_id]);
+				ee_printf("[%u]ERROR! state crc 0x%04x - should be 0x%04x\r\n",i,results[i].crcstate,state_known_crc[known_id]);
 				results[i].err++;
 			}
 			total_errors+=results[i].err;
@@ -287,44 +289,44 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	}
 	total_errors+=check_data_types();
 	/* and report results */
-	ee_printf("CoreMark Size    : %lu\n",(ee_u32)results[0].size);
-	ee_printf("Total ticks      : %lu\n",(ee_u32)total_time);
+	ee_printf("CoreMark Size    : %lu\r\n",(ee_u32)results[0].size);
+	ee_printf("Total ticks      : %lu\r\n",(ee_u32)total_time);
 #if HAS_FLOAT
-	ee_printf("Total time (secs): %f\n",time_in_secs(total_time));
+	ee_printf("Total time (secs): %f\r\n",time_in_secs(total_time));
 	if (time_in_secs(total_time) > 0)
-		ee_printf("Iterations/Sec   : %f\n",default_num_contexts*results[0].iterations/time_in_secs(total_time));
+		ee_printf("Iterations/Sec   : %f\r\n",default_num_contexts*results[0].iterations/time_in_secs(total_time));
 #else 
-	ee_printf("Total time (secs): %d\n",time_in_secs(total_time));
+	ee_printf("Total time (secs): %d\r\n",time_in_secs(total_time));
 	if (time_in_secs(total_time) > 0)
-		ee_printf("Iterations/Sec   : %d\n",default_num_contexts*results[0].iterations/time_in_secs(total_time));
+		ee_printf("Iterations/Sec   : %d\r\n",default_num_contexts*results[0].iterations/time_in_secs(total_time));
 #endif
 	if (time_in_secs(total_time) < 10) {
-		ee_printf("ERROR! Must execute for at least 10 secs for a valid result!\n");
+		ee_printf("ERROR! Must execute for at least 10 secs for a valid result!\r\n");
 		total_errors++;
 	}
 
-	ee_printf("Iterations       : %lu\n",(ee_u32)default_num_contexts*results[0].iterations);
-	ee_printf("Compiler version : %s\n",COMPILER_VERSION);
-	ee_printf("Compiler flags   : %s\n",COMPILER_FLAGS);
+	ee_printf("Iterations       : %lu\r\n",(ee_u32)default_num_contexts*results[0].iterations);
+	ee_printf("Compiler version : %s\r\n",COMPILER_VERSION);
+	ee_printf("Compiler flags   : %s\r\n",COMPILER_FLAGS);
 #if (MULTITHREAD>1)
-	ee_printf("Parallel %s : %d\n",PARALLEL_METHOD,default_num_contexts);
+	ee_printf("Parallel %s : %d\r\n",PARALLEL_METHOD,default_num_contexts);
 #endif
-	ee_printf("Memory location  : %s\n",MEM_LOCATION);
+	ee_printf("Memory location  : %s\r\n",MEM_LOCATION);
 	/* output for verification */
-	ee_printf("seedcrc          : 0x%04x\n",seedcrc);
+	ee_printf("seedcrc          : 0x%04x\r\n",seedcrc);
 	if (results[0].execs & ID_LIST)
 		for (i=0 ; i<default_num_contexts; i++) 
-			ee_printf("[%d]crclist       : 0x%04x\n",i,results[i].crclist);
+			ee_printf("[%d]crclist       : 0x%04x\r\n",i,results[i].crclist);
 	if (results[0].execs & ID_MATRIX) 
 		for (i=0 ; i<default_num_contexts; i++) 
-			ee_printf("[%d]crcmatrix     : 0x%04x\n",i,results[i].crcmatrix);
+			ee_printf("[%d]crcmatrix     : 0x%04x\r\n",i,results[i].crcmatrix);
 	if (results[0].execs & ID_STATE)
 		for (i=0 ; i<default_num_contexts; i++) 
-			ee_printf("[%d]crcstate      : 0x%04x\n",i,results[i].crcstate);
+			ee_printf("[%d]crcstate      : 0x%04x\r\n",i,results[i].crcstate);
 	for (i=0 ; i<default_num_contexts; i++) 
-		ee_printf("[%d]crcfinal      : 0x%04x\n",i,results[i].crc);
+		ee_printf("[%d]crcfinal      : 0x%04x\r\n",i,results[i].crc);
 	if (total_errors==0) {
-		ee_printf("Correct operation validated. See readme.txt for run and reporting rules.\n");
+		ee_printf("Correct operation validated. See readme.txt for run and reporting rules.\r\n");
 #if HAS_FLOAT
 		if (known_id==3) {
 			ee_printf("CoreMark 1.0 : %f / %s %s",default_num_contexts*results[0].iterations/time_in_secs(total_time),COMPILER_VERSION,COMPILER_FLAGS);
@@ -337,14 +339,14 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 #if (MULTITHREAD>1)
 			ee_printf(" / %d:%s",default_num_contexts,PARALLEL_METHOD);
 #endif
-			ee_printf("\n");
+			ee_printf("\r\n");
 		}
 #endif
 	}
 	if (total_errors>0)
-		ee_printf("Errors detected\n");
+		ee_printf("Errors detected\r\n");
 	if (total_errors<0)
-		ee_printf("Cannot validate operation for these seed values, please compare with results on a known platform.\n");
+		ee_printf("Cannot validate operation for these seed values, please compare with results on a known platform.\r\n");
 
 #if (MEM_METHOD==MEM_MALLOC)
 	for (i=0 ; i<MULTITHREAD; i++) 
@@ -356,16 +358,16 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
     float coremark_dmips = (results[0].iterations*1000000)/(float)total_time;
 
 #if HAS_FLOAT
-    ee_printf ("\n");
-    ee_printf ("\n");
-    ee_printf ("Print Personal Added Addtional Info to Easy Visual Analysis\n");
-    ee_printf ("\n");
-    ee_printf (" (*) Assume the core running at 1 MHz\n");
-    ee_printf ("     So the CoreMark/MHz can be caculated by: \n");
-    ee_printf ("     (Iterations*1000000/total_ticks) = %2.6f CoreMark/MHz\n", coremark_dmips);
+    ee_printf ("\r\n");
+    ee_printf ("\r\n");
+    ee_printf ("Print Personal Added Addtional Info to Easy Visual Analysis\r\n");
+    ee_printf ("\r\n");
+    ee_printf (" (*) Assume core running at 1 MHz\r\n");
+    ee_printf ("     So the CoreMark/MHz can be caculated by: \r\n");
+    ee_printf ("     (Iterations*1000000/total_ticks) = %2.6fCoreMark/MHz\r\n", coremark_dmips);
     //float coremark_dmips_2 = default_num_contexts*results[0].iterations/time_in_secs(total_time) / 8.388;
-    //ee_printf ("     (Iterations/Sec/total_cycles) = %2.6f CoreMark/MHz\n", coremark_dmips_2);
-    ee_printf ("\n");
+    //ee_printf ("     (Iterations/Sec/total_cycles) = %2.6f CoreMark/MHz\r\n", coremark_dmips_2);
+    ee_printf ("\r\n");
 #endif
 
 	return MAIN_RETURN_VAL;	
