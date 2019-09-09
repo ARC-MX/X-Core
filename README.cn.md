@@ -66,6 +66,14 @@ X-Core SoC外设：
 
 ![Perf-V FPGA开发板图片](http://perfv.org/images/home/board_intro.png)
 
+## Benchmark
+
+* [Benchmark on Perf-V FPGA Board](https://github.com/PerfXLab/X-Core/wiki/Benchmark)
+
+## 下载
+
+* [Bitstream for Perf-V FPGA Board](https://github.com/PerfXLab/X-Core/wiki/Bitstream)
+
 ## 交流讨论
 
 - QQ群：806854399
