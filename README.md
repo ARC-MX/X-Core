@@ -17,6 +17,14 @@ X-Core:
 
 ![Perf-V FPGA Board Image](http://perfv.org/images/home/board_intro.png)
 
+## Benchmark
+
+* [Benchmark on Perf-V FPGA Board](https://github.com/PerfXLab/X-Core/wiki/Benchmark)
+
+## Download
+
+* [Bitstream for Perf-V FPGA Board](https://github.com/PerfXLab/X-Core/wiki/Bitstream)
+
 ## Support
 
 - QQ group: 806854399
